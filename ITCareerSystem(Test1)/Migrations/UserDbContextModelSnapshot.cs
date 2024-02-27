@@ -3,19 +3,16 @@ using ITCareerSystem_Test1_.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
 namespace ITCareerSystem_Test1_.Migrations
 {
-    [DbContext(typeof(UserContext))]
-    [Migration("20240221005839_initial")]
-    partial class initial
+    [DbContext(typeof(UserDbContext))]
+    partial class UserDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,13 +28,14 @@ namespace ITCareerSystem_Test1_.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("varchar(150)");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar(255");
 
                     b.Property<string>("TP_Number")
+                        .IsRequired()
                         .HasColumnType("varchar(15)");
 
                     b.HasKey("User_Name");
