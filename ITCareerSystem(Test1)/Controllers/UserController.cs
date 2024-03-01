@@ -1,14 +1,4 @@
-﻿//using ITCareerSystem_Test1_.Data;
-//using ITCareerSystem_Test1_.Models;
-//using Microsoft.AspNetCore.Http;
-//using Microsoft.AspNetCore.Mvc;
-
-//namespace ITCareerSystem_Test1_.Controllers
-//{
-//    [Route("api/[controller]")]
-//    [ApiController]
-
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using ITCareerSystem_Test1_.Data;
