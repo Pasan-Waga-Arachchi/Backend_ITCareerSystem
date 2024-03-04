@@ -21,13 +21,13 @@ namespace ITCareerSystem_Test1_.Controllers
         [HttpGet] // Changed to POST to accept input from user
         [Route("MoreDegreeInformation")]
 
-        public IActionResult MoreDegreeInformation(String? DegreeName)
+        public IActionResult MoreDegreeInformation(String? DegreeName, String UniversityName)
         {
             try
             {
-                if (String.IsNullOrEmpty(DegreeName))
+                if (String.IsNullOrEmpty(DegreeName) || String.IsNullOrEmpty(UniversityName))
                 {
-                    return BadRequest("Degree Name Cannot be Empty");
+                    return BadRequest("Degree Name and University Name Cannot be Empty");
                 }
 
                 using (SqlConnection con = new SqlConnection(_configuration.GetConnectionString("DataBaseConnection")))
@@ -83,13 +83,16 @@ LEFT JOIN
 LEFT JOIN 
     Job_Career JC ON DJ.Job_ID = JC.Job_ID
 WHERE 
-    DD.DegreeName = 'BSc Computer Science';
+    DD.DegreeName = @DegreeName
+    AND U.UniversityName = @UniversityName;
 ";
 
                     // Execute query
                     using (SqlCommand cmd = new SqlCommand(query, con))
                     {
                         cmd.Parameters.AddWithValue("@DegreeName", DegreeName);
+                        cmd.Parameters.AddWithValue("@UniversityName", UniversityName);
+
                         using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
                         {
                             DataTable dt = new DataTable();
