@@ -18,7 +18,7 @@ namespace ITCareerSystem_Test1_.Controllers
             _configuration = configuration;
         }
 
-        [HttpPost] // Changed to POST to accept input from user
+        [HttpGet] // Changed to POST to accept input from user
         [Route("MoreDegreeInformation")]
 
         public IActionResult MoreDegreeInformation(String? DegreeName)
@@ -120,10 +120,10 @@ WHERE
                                         moreDegree.Subject = row["Subject"].ToString();
                                         moreDegree.SubCredits = Convert.ToSingle(row["SubCredits"]);
                                         moreDegree.Core_Optional = row["Core_Optional"].ToString();
-                                        moreDegree.Job_Name = row["Job_Name"].ToString();
-                                        moreDegree.Descp = row["Descp"].ToString();
-                                        moreDegree.Local_Global = row["Local_Global"].ToString();
-                                        moreDegree.Estimated_Salary = row["Estimated_Salary"].ToString();
+                                        //moreDegree.Job_Name = row["Job_Name"].ToString();
+                                        //moreDegree.Descp = row["Descp"].ToString();
+                                        //moreDegree.Local_Global = row["Local_Global"].ToString();
+                                        //moreDegree.Estimated_Salary = row["Estimated_Salary"].ToString();
                                     };
                                     moreDegreeInformatins.Add(moreDegree);
 

@@ -22,15 +22,15 @@ namespace ITCareerSystem_Test1_.Controllers
             _configuration = configuration;
         }
 
-        [HttpPost] // Changed to POST to accept input from user
+        [HttpGet] // Changed to POST to accept input from user
         [Route("GetDegreesBySubjects")]
         public IActionResult GetDegreesBySubjects(String Subject1, String Subject2, String Subject3, String District, float ZScore)
         {
             try
             {
-                if (string.IsNullOrEmpty(Subject1) || string.IsNullOrEmpty(Subject2) || string.IsNullOrEmpty(Subject3) || string.IsNullOrEmpty(District) || ZScore==0)
+                if (string.IsNullOrEmpty(Subject1) || string.IsNullOrEmpty(Subject2) || string.IsNullOrEmpty(Subject3) || string.IsNullOrEmpty(District))
                 {
-                    return BadRequest("JobRole Cannot be Empty");
+                    return BadRequest("Values Cannot be Empty");
                 }
                 // Initialize SQL connection
                 using (SqlConnection con = new SqlConnection(_configuration.GetConnectionString("DataBaseConnection")))
@@ -119,7 +119,7 @@ namespace ITCareerSystem_Test1_.Controllers
                                         UniversityName = row["UniversityName"].ToString(),
                                         No_of_Years = Convert.ToInt32(row["No_of_Years"]),
                                         Credits = Convert.ToInt32(row["Credits"]),
-                                        NVQ_SLQF =  row["NVQ_SLQF"].ToString(),
+                                        NVQ_SLQF = row["NVQ_SLQF"].ToString(),
                                         Degree_Type = row["Degree_Type"].ToString(),
                                         No_of_Chairs = Convert.ToInt32(row["No_of_Chairs"]),
                                         Faculty = row["Faculty"].ToString(),

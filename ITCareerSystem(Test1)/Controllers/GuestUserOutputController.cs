@@ -18,15 +18,15 @@ namespace ITCareerSystem_Test1_.Controllers
 
         }
 
-        [HttpPost] // Changed to POST to accept input from user
+        [HttpGet] // Changed to POST to accept input from user
         [Route("GetGuestUserOutput")]
 
-        
-        public IActionResult GetGuestUserOutput(String? UniversityName = null , int No_of_Years = 0, String? Combination = null, String? Degree_Type = null, int NVQ_SLQF = 0)
+
+        public IActionResult GetGuestUserOutput(String? UniversityName = null, int No_of_Years = 0, String? Combination = null, String? Degree_Type = null, int NVQ_SLQF = 0)
         {
             try
             {
-                
+
                 using (SqlConnection con = new SqlConnection(_configuration.GetConnectionString("DataBaseConnection")))
                 {
                     con.Open();
@@ -160,7 +160,7 @@ namespace ITCareerSystem_Test1_.Controllers
                         {
                             cmd.Parameters.AddWithValue("@No_of_Years", DBNull.Value);
                         }
-                        
+
 
                         if (Combination != null)
                         {
@@ -187,7 +187,7 @@ namespace ITCareerSystem_Test1_.Controllers
                         {
                             cmd.Parameters.AddWithValue("@NVQ_SLQF", DBNull.Value);
                         }
-                        
+
 
                         using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
                         {

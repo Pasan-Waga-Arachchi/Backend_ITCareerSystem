@@ -18,7 +18,7 @@ namespace ITCareerSystem_Test1_.Controllers
             _configuration = configuration;
         }
 
-        [HttpPost] // Changed to POST to accept input from user
+        [HttpGet] // Changed to POST to accept input from user
         [Route("GetOLOutputDetails")]
         public IActionResult GetOLOutputDetails(string jobRole)
         {
@@ -75,13 +75,13 @@ WHERE
                                 List<OLOutput> olOutput = new List<OLOutput>();
                                 foreach (DataRow row in dt.Rows)
                                 {
-                                    
+
                                     OLOutput oLOutput = new OLOutput();
                                     {
-                                        
+
                                         oLOutput.Combination = row["Combination"].ToString(); // Assign value to Combination property
                                         oLOutput.DegreeName = row["DegreeName"].ToString();
-                                        oLOutput.UniversityName = row["UniversityName"].ToString() ;
+                                        oLOutput.UniversityName = row["UniversityName"].ToString();
 
                                     };
                                     olOutput.Add(oLOutput);

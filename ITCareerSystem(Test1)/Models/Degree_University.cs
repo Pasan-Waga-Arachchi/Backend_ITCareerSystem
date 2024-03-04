@@ -1,8 +1,13 @@
-﻿namespace ITCareerSystem_Test1_.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ITCareerSystem_Test1_.Models
 {
     public class Degree_University
     {
+        [Key]
         public String? Degree_ID { get; set; }
+
+        [Key]
         public String? University_ID { get; set; }
         public String? No_of_Years { get; set; }
         public String? Industrial_Training { get; set; }
