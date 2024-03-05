@@ -10,7 +10,7 @@ namespace ITCareerSystem_Test1_.Controllers
     [ApiController]
     public class SignUpController : ControllerBase
     {
-        private IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
         public SignUpController(IConfiguration configuration)
         {
 
