@@ -41,17 +41,7 @@ namespace ITCareerSystem_Test1_.Controllers
                     string query = @"SELECT
                 degreedetails.DegreeName,
                 university.UniversityName,
-                degree_university.No_of_Years,
-                degree_university.Credits,
-                degree_university.NVQ_SLQF,
-                degree_university.Degree_Type,
-                degree_university.No_of_Chairs,
-                degree_university.Faculty,
-                degree_university.Department,
-                degree_university.No_of_Special_Student,
-                degree_university.AptitudeTest,
                 degree_zscore.Year_ago_Zscore,
-                degree_zscore.Two_Year_ago_Zscore,
                 degree_zscore.Prediction
             FROM
                 alsubject
@@ -74,17 +64,7 @@ namespace ITCareerSystem_Test1_.Controllers
             GROUP BY
                 degreedetails.DegreeName,
                 university.UniversityName,
-                degree_university.No_of_Years,
-                degree_university.Credits,
-                degree_university.NVQ_SLQF,
-                degree_university.Degree_Type,
-                degree_university.No_of_Chairs,
-                degree_university.Faculty,
-                degree_university.Department,
-                degree_university.No_of_Special_Student,
-                degree_university.AptitudeTest,
                 degree_zscore.Year_ago_Zscore,
-                degree_zscore.Two_Year_ago_Zscore,
                 degree_zscore.Prediction;";
 
                     // Execute query
@@ -108,33 +88,33 @@ namespace ITCareerSystem_Test1_.Controllers
                             // If degrees found, return them
                             if (dt.Rows.Count > 0)
                             {
-                                List<Degree> degrees = new List<Degree>();
+                                
+                                List<ALInputOutput> aLInputOutputs = new List<ALInputOutput>();
                                 foreach (DataRow row in dt.Rows)
                                 {
-                                    University university = new University();
-                                    Degree degree = new Degree
+                                    ALInputOutput aOutput = new ALInputOutput();
+                                    
                                     {
 
-                                        DegreeName = row["DegreeName"].ToString(),
-                                        UniversityName = row["UniversityName"].ToString(),
-                                        No_of_Years = Convert.ToInt32(row["No_of_Years"]),
-                                        Credits = Convert.ToInt32(row["Credits"]),
-                                        NVQ_SLQF = row["NVQ_SLQF"].ToString(),
-                                        Degree_Type = row["Degree_Type"].ToString(),
-                                        No_of_Chairs = Convert.ToInt32(row["No_of_Chairs"]),
-                                        Faculty = row["Faculty"].ToString(),
-                                        Department = row["Department"].ToString(),
-                                        No_of_Special_Student = Convert.ToInt32(row["No_of_Special_Student"]),
-                                        AptitudeTest = row["AptitudeTest"].ToString(),
+                                        aOutput.UniversityName = row["UniversityName"].ToString();
+                                        aOutput.DegreeName = row["Degreename"].ToString() ;
+                                        if (row["Year_ago_ZScore"] != DBNull.Value)
+                                        {
+                                            aOutput.Year_ago_ZScore = Convert.ToInt32(row["Year_ago_ZScore"]);
+                                        }
 
-                                        // Add other properties as needed
+                                        if (row["Prediction"] != DBNull.Value)
+                                        {
+                                            aOutput.Prediction = Convert.ToInt32(row["Prediction"]);
+                                        }
+
 
 
                                     };
-                                    degrees.Add(degree);
+                                    aLInputOutputs.Add(aOutput);
 
                                 }
-                                return Ok(degrees);
+                                return Ok(aLInputOutputs);
                             }
                             else
                             {
