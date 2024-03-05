@@ -7,7 +7,7 @@ namespace ITCareerSystem_Test1_.Models
     {
 
         [Column(TypeName = "nvarchar(50)")]
-        [Key] public required string University_ID { get; set; }
+        [Key] public string University_ID { get; set; }
 
         [Column(TypeName = "varchar(255)")]
         public string? UniversityName { get; set; }
