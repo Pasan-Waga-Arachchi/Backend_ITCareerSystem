@@ -1,4 +1,4 @@
-﻿﻿using ITCareerSystem_Test1_.Models;
+﻿using ITCareerSystem_Test1_.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -8,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace ITCareerSystem_Test1_.Controllers
 {
-    [Route("MoreDegreeInformation")]
+    [Route("MoreDegreeInfor")]
     [ApiController]
     public class MoreDegreeInfoController : ControllerBase
     {
@@ -21,13 +21,13 @@ namespace ITCareerSystem_Test1_.Controllers
         [HttpGet] // Changed to POST to accept input from user
         [Route("MoreDegreeInformation")]
 
-        public IActionResult MoreDegreeInformation(string DegreeName)
+        public IActionResult MoreDegreeInformation(String? DegreeName, String UniversityName)
         {
             try
             {
-                if (String.IsNullOrEmpty(DegreeName))
+                if (String.IsNullOrEmpty(DegreeName) || String.IsNullOrEmpty(UniversityName))
                 {
-                    return BadRequest("Degree Name Cannot be Empty");
+                    return BadRequest("Degree Name and University Name Cannot be Empty");
                 }
 
                 using (SqlConnection con = new SqlConnection(_configuration.GetConnectionString("DataBaseConnection")))
@@ -36,60 +36,63 @@ namespace ITCareerSystem_Test1_.Controllers
 
                     // Select all degrees based on the provided subjects
                     string query = @"SELECT 
-                        DC.Level,
-                        DC.Semester,
-                        DC.Subject,
-                        DC.Core_Optional,
-	                    DC.SubCredits,
-                        DU.No_of_Years,
-                        DU.Industrial_Training,
-                        DU.Credits,
-                        DU.NVQ_SLQF,
-                        DU.Degree_Type,
-                        DU.No_of_Chairs,
-                        DU.Faculty,
-                        DU.Department,
-                        DU.No_of_Special_Student,
-                        DU.AptitudeTest,
-                        U.UniversityName,
-                        DD.DegreeName,
-                        DD.Main_Discipline,
-                        JC.Job_Name,
-                        JC.Estimated_Salary,
-                        JC.Description,
-                        JC.Local_Global
-                    FROM 
-                        (SELECT DISTINCT 
-                             DC.Degree_ID,
-                             DC.Level,
-                             DC.Semester,
-                             DC.Subject,
-                             DC.Core_Optional,
-		                     DC.SubCredits,
-                             DD.DegreeName,
-                             DD.Main_Discipline
-                         FROM 
-                             Degree_Content DC
-                         INNER JOIN 
-                             DegreeDetails DD ON DC.Degree_ID = DD.Degree_ID) DC
-                    INNER JOIN 
-                        DegreeDetails DD ON DC.Degree_ID = DD.Degree_ID
-                    INNER JOIN 
-                        Degree_University DU ON DD.Degree_ID = DU.Degree_ID
-                    INNER JOIN 
-                        University U ON DU.University_ID = U.University_ID
-                    LEFT JOIN 
-                        Degree_Jobs DJ ON DD.Degree_ID = DJ.Degree_ID
-                    LEFT JOIN 
-                        Job_Career JC ON DJ.Job_ID = JC.Job_ID
-                    WHERE 
-                        DD.DegreeName = @DegreeName;
-                    ";
+                            DC.Level,
+                            DC.Semester,
+                            DC.Subject,
+                            DC.Core_Optional,
+	                        DC.SubCredits,
+                            DU.No_of_Years,
+                            DU.Industrial_Training,
+                            DU.Credits,
+                            DU.NVQ_SLQF,
+                            DU.Degree_Type,
+                            DU.No_of_Chairs,
+                            DU.Faculty,
+                            DU.Department,
+                            DU.No_of_Special_Student,
+                            DU.AptitudeTest,
+                            U.UniversityName,
+                            DD.DegreeName,
+                            DD.Main_Discipline,
+                            JC.Job_Name,
+                            JC.Estimated_Salary,
+                            JC.Descp,
+                            JC.Local_Global
+                        FROM 
+                            (SELECT DISTINCT 
+                                 DC.Degree_ID,
+                                 DC.Level,
+                                 DC.Semester,
+                                 DC.Subject,
+                                 DC.Core_Optional,
+		                         DC.SubCredits,
+                                 DD.DegreeName,
+                                 DD.Main_Discipline
+                             FROM 
+                                 Degree_Content DC
+                             INNER JOIN 
+                                 DegreeDetails DD ON DC.Degree_ID = DD.Degree_ID) DC
+                        INNER JOIN 
+                            DegreeDetails DD ON DC.Degree_ID = DD.Degree_ID
+                        INNER JOIN 
+                            Degree_University DU ON DD.Degree_ID = DU.Degree_ID
+                        INNER JOIN 
+                            University U ON DU.University_ID = U.University_ID
+                        LEFT JOIN 
+                            Degree_Jobs DJ ON DD.Degree_ID = DJ.Degree_ID
+                        LEFT JOIN 
+                            Job_Career JC ON DJ.Job_ID = JC.Job_ID
+                        WHERE 
+                            DD.DegreeName = @DegreeName
+                            AND U.UniversityName = @UniversityName;
+                        ";
 
                     // Execute query
                     using (SqlCommand cmd = new SqlCommand(query, con))
                     {
                         cmd.Parameters.AddWithValue("@DegreeName", DegreeName);
+                        cmd.Parameters.AddWithValue("@UniversityName", UniversityName);
+
                         using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
                         {
                             DataTable dt = new DataTable();
@@ -120,10 +123,10 @@ namespace ITCareerSystem_Test1_.Controllers
                                         moreDegree.Subject = row["Subject"].ToString();
                                         moreDegree.SubCredits = Convert.ToSingle(row["SubCredits"]);
                                         moreDegree.Core_Optional = row["Core_Optional"].ToString();
-                                        moreDegree.Job_Name = row["Job_Name"].ToString();
-                                        moreDegree.Description = row["Description"].ToString();
-                                        moreDegree.Local_Global = row["Local_Global"].ToString();
-                                        moreDegree.Estimated_Salary = row["Estimated_Salary"].ToString();
+                                        //moreDegree.Job_Name = row["Job_Name"].ToString();
+                                        //moreDegree.Descp = row["Descp"].ToString();
+                                        //moreDegree.Local_Global = row["Local_Global"].ToString();
+                                        //moreDegree.Estimated_Salary = row["Estimated_Salary"].ToString();
                                     };
                                     moreDegreeInformatins.Add(moreDegree);
 

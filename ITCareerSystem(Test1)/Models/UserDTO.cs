@@ -10,6 +10,8 @@ namespace ITCareerSystem_Test1_.Models
 
         public string Email { get; set; }
 
-        public string? TP_Number { get; set; }
+        public string TP_Number { get; set; }
+
+        public string User_Role { get; set; }
     }
 }

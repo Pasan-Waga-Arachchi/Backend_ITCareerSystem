@@ -21,32 +21,33 @@ namespace ITCareerSystem_Test1_.Controllers
             this.userContext = userContext;
         }
 
-        [HttpGet]
+        //[HttpGet]
 
-        public IActionResult GetAll()
-        {
-            // get data from the database
-            var userDomainModel = userContext.User.ToList();
+        //public IActionResult GetAll()
+        //{
+        //    // get data from the database
+        //    var userDomainModel = userContext.User.ToList();
 
-            //map domain models to dtos
-            var userDtos = new List<UserDTO>();
-            foreach (var uDTO in userDomainModel)
-            {
-                userDtos.Add(new UserDTO()
-                {
-                    User_Name = uDTO.User_Name,
-                    Password = uDTO.Password,
-                    Email = uDTO.Email,
-                    TP_Number = uDTO.TP_Number,
-                });
-            }
-            return Ok(userDtos);   
-        }
+        //    //map domain models to dtos
+        //    var userDtos = new List<UserDTO>();
+        //    foreach (var uDTO in userDomainModel)
+        //    {
+        //        userDtos.Add(new UserDTO()
+        //        {
+        //            User_Name = uDTO.User_Name,
+        //            Password = uDTO.Password,
+        //            Email = uDTO.Email,
+        //            TP_Number = uDTO.TP_Number,
+        //        });
+        //    }
+        //    return Ok(userDtos);   
+        //}
 
         [HttpPost("Login")]
-        public IActionResult CheckUsername(string user_Name, string password)
+        public IActionResult CheckUsername([FromBody] UserLogin user)
         {
-            
+            string user_Name = user.Username;
+            string password = user.Password;
 
             if (string.IsNullOrEmpty(user_Name) || string.IsNullOrEmpty(password))
             {
@@ -65,32 +66,31 @@ namespace ITCareerSystem_Test1_.Controllers
                         if (reader.Read())
                         {
                             // Retrieve column values from the reader
-                            
                             string userName = reader.GetString(reader.GetOrdinal("User_Name"));
                             string pwd = reader.GetString(reader.GetOrdinal("Password"));
                             string email = reader.GetString(reader.GetOrdinal("Email"));
                             string phone = reader.GetString(reader.GetOrdinal("TP_Number"));
-                            // You can retrieve other columns as needed
-                            
-                            if(pwd == password)
-                            {
-                                var userDtos = new UserDTO();
+                            string userRole = reader.GetString(reader.GetOrdinal("UserRole"));
 
-                                userDtos.User_Name = userName;
-                                userDtos.Password = password;
-                                userDtos.TP_Number = phone;
+                            // Check if the user is an admin
+                            bool isAdmin = userRole.Trim().Equals("Admin", StringComparison.OrdinalIgnoreCase);
+
+                            if (pwd == password)
+                            {
+                                var userDtos = new UserDTO
+                                {
+                                    User_Name = userName,
+                                    Password = password,
+                                    TP_Number = phone,
+                                    User_Role = isAdmin? "Admin":"User", // Set userRole based on admin status
+                                };
 
                                 return Ok(userDtos);
-
                             }
                             else
                             {
                                 return BadRequest("Password incorrect");
                             }
-
-
-
-                            
                         }
                         else
                         {
@@ -102,27 +102,28 @@ namespace ITCareerSystem_Test1_.Controllers
         }
 
 
-        //[Authorize]
-        [HttpPost]
-        public IActionResult Login([FromBody] UserLogin request)
-        {
-            if (string.IsNullOrEmpty(request.Username))
-            {
-                return BadRequest("Username is required.");
-            }
 
-            if (string.IsNullOrEmpty(request.Password))
-            {
-                return BadRequest("Password is required.");
-            }
+        ////[Authorize]
+        //[HttpPost]
+        //public IActionResult Login([FromBody] UserLogin request)
+        //{
+        //    if (string.IsNullOrEmpty(request.Username))
+        //    {
+        //        return BadRequest("Username is required.");
+        //    }
 
-            if (userContext.ValidateUser(request.Username, request.Password))
-            {
-                return Ok("Login successful"); // Replace with a more meaningful response
-            }
+        //    if (string.IsNullOrEmpty(request.Password))
+        //    {
+        //        return BadRequest("Password is required.");
+        //    }
 
-            return BadRequest("Invalid username or password.");
-        }
+        //    if (userContext.ValidateUser(request.Username, request.Password))
+        //    {
+        //        return Ok("Login successful");  // Replace with a more meaningful response
+        //    }
+
+        //    return BadRequest("Invalid username or password.");
+        //}
 
 
     }

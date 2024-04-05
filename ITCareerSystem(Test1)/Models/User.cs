@@ -18,7 +18,8 @@ namespace ITCareerSystem_Test1_.Models
         [Column(TypeName = "varchar(15)")]
         public string TP_Number { get; set; }
 
-
+        [Column(TypeName = "char(10)")]
+        public string User_Role { get; set; }
     }
 
 }
