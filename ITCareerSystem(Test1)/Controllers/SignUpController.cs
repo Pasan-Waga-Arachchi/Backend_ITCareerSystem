@@ -21,8 +21,13 @@ namespace ITCareerSystem_Test1_.Controllers
         [HttpPost]
         [Route("PostSignUpDetails")]
 
-        public IActionResult PostSignUpDetails(String UserName, String Password, String email, String TP_Number)
+        public IActionResult PostSignUpDetails([FromBody] User user)
         {
+            String UserName = user.User_Name;
+            String Password = user.Password;
+            String email = user.Email;
+            String TP_Number = user.TP_Number;
+
             try
             {
                 if (String.IsNullOrEmpty(UserName) || String.IsNullOrEmpty(Password) || String.IsNullOrEmpty(email))
@@ -36,7 +41,7 @@ namespace ITCareerSystem_Test1_.Controllers
 
                     // Select all degrees based on the provided subjects
                     string query = @"INSERT INTO [User] (User_Name, Password, Email, TP_Number, UserRole)
-VALUES (@UserName, @Password, @mail, @TP_Number, 'User')";
+                        VALUES (@UserName, @Password, @mail, @TP_Number, 'User')";
 
                     // Execute query
                     using (SqlCommand cmd = new SqlCommand(query, con))
