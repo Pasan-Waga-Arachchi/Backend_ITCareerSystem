@@ -14,11 +14,14 @@ namespace ITCareerSystem_Test1_.Controllers
     {
         private readonly IConfiguration _configuration;
         private readonly UserDbContext userContext;
+        private readonly DatabaseConnection _dbConnection;
+        SqlConnection con = null;
 
         public UserController(IConfiguration configuration, UserDbContext userContext)
         {
             this._configuration = configuration;
             this.userContext = userContext;
+            this._dbConnection = DatabaseConnection.Instance(configuration);
         }
 
         //[HttpGet]
@@ -53,9 +56,10 @@ namespace ITCareerSystem_Test1_.Controllers
             {
                 return BadRequest("Username or Password cannot be empty");
             }
-
+            
             using (SqlConnection con = new SqlConnection(_configuration.GetConnectionString("DataBaseConnection")))
             {
+
                 con.Open();
                 string query = "SELECT * FROM [User] WHERE User_Name = @Username";
                 using (SqlCommand cmd = new SqlCommand(query, con))
@@ -84,16 +88,18 @@ namespace ITCareerSystem_Test1_.Controllers
                                     TP_Number = phone,
                                     User_Role = isAdmin? "Admin":"User", // Set userRole based on admin status
                                 };
-
+                                con.Close();
                                 return Ok(userDtos);
                             }
                             else
                             {
+                                con.Close();
                                 return BadRequest("Password incorrect");
                             }
                         }
                         else
                         {
+                            con.Close();
                             return NotFound("Username does not exist");
                         }
                     }

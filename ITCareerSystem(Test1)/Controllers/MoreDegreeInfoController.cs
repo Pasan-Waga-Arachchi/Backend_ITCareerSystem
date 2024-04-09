@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
+using System.Data.Common;
 
 namespace ITCareerSystem_Test1_.Controllers
 {
@@ -13,15 +14,17 @@ namespace ITCareerSystem_Test1_.Controllers
     public class MoreDegreeInfoController : ControllerBase
     {
         private readonly IConfiguration _configuration;
+        private readonly DatabaseConnection _dbConnection;
         public MoreDegreeInfoController(IConfiguration configuration)
         {
-            _configuration = configuration;
+            this._configuration = configuration;
+            this._dbConnection = DatabaseConnection.Instance(configuration);
         }
 
-        [HttpGet] // Changed to POST to accept input from user
+            [HttpGet]
         [Route("MoreDegreeInformation")]
 
-        public IActionResult MoreDegreeInformation(String? DegreeName, String UniversityName)
+        public IActionResult MoreDegreeInformation(String DegreeName, String UniversityName)
         {
             try
             {

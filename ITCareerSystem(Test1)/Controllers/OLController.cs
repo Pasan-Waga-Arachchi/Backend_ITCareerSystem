@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration; // Add this using directive
 using System.Data.SqlClient;
 using System.Data;
+using System.Data.Common;
 
 namespace ITCareerSystem_Test1_.Controllers
 {
@@ -12,10 +13,14 @@ namespace ITCareerSystem_Test1_.Controllers
     public class OLOutputController : ControllerBase
     {
         private readonly IConfiguration _configuration;
+        private readonly DatabaseConnection _dbConnection;
+
 
         public OLOutputController(IConfiguration configuration)
         {
-            _configuration = configuration;
+            this._configuration = configuration;
+            this._dbConnection = DatabaseConnection.Instance(configuration);
+
         }
 
         [HttpGet] // Changed to POST to accept input from user

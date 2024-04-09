@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Data.SqlClient;
 using System.Data;
+using System.Data.Common;
 
 namespace ITCareerSystem_Test1_.Controllers
 {
@@ -11,10 +12,12 @@ namespace ITCareerSystem_Test1_.Controllers
     public class SignUpController : ControllerBase
     {
         private readonly IConfiguration _configuration;
+        private readonly DatabaseConnection _dbConnection;
         public SignUpController(IConfiguration configuration)
         {
 
-            _configuration = configuration;
+            this._configuration = configuration;
+            this._dbConnection = DatabaseConnection.Instance(configuration);
 
         }
 

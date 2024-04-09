@@ -14,9 +14,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 
+
 builder.Services.AddDbContext<UserDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DataBaseConnection"))
     );
+
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

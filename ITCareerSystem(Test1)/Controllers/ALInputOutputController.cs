@@ -16,13 +16,15 @@ namespace ITCareerSystem_Test1_.Controllers
     public class ALInputOutputController : ControllerBase
     {
         private readonly IConfiguration _configuration;
+        private readonly DatabaseConnection _dbConnection;
 
         public ALInputOutputController(IConfiguration configuration)
         {
-            _configuration = configuration;
+            this._configuration = configuration;
+            this._dbConnection = DatabaseConnection.Instance(configuration);
         }
 
-        [HttpGet] // Changed to POST to accept input from user
+            [HttpGet] // Changed to POST to accept input from user
         [Route("GetDegreesBySubjects")]
         public IActionResult GetDegreesBySubjects(String Subject1, String Subject2, String Subject3, String District, float ZScore)
         {
