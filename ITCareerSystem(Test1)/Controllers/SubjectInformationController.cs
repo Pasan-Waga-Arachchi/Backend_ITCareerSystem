@@ -41,55 +41,22 @@ namespace ITCareerSystem_Test1_.Controllers
 
 
                         string query = @"SELECT 
-                                        DC.Level,
-                                        DC.Semester,
-                                        DC.Subject,
-                                        DC.Core_Optional,
-	                                    DC.SubCredits,
-                                        DU.No_of_Years,
-                                        DU.Industrial_Training,
-                                        DU.Credits,
-                                        DU.NVQ_SLQF,
-                                        DU.Degree_Type,
-                                        DU.No_of_Chairs,
-                                        DU.Faculty,
-                                        DU.Department,
-                                        DU.No_of_Special_Student,
-                                        DU.AptitudeTest,
-                                        U.UniversityName,
-                                        DD.DegreeName,
-                                        DD.Main_Discipline,
-                                        JC.Job_Name,
-                                        JC.Estimated_Salary,
-                                        JC.Descp,
-                                        JC.Local_Global
-                                    FROM 
-                                        (SELECT DISTINCT 
-                                             DC.Degree_ID,
-                                             DC.Level,
-                                             DC.Semester,
-                                             DC.Subject,
-                                             DC.Core_Optional,
-		                                     DC.SubCredits,
-                                             DD.DegreeName,
-                                             DD.Main_Discipline
-                                         FROM 
-                                             Degree_Content DC
-                                         INNER JOIN 
-                                             DegreeDetails DD ON DC.Degree_ID = DD.Degree_ID) DC
-                                    INNER JOIN 
-                                        DegreeDetails DD ON DC.Degree_ID = DD.Degree_ID
-                                    INNER JOIN 
-                                        Degree_University DU ON DD.Degree_ID = DU.Degree_ID
-                                    INNER JOIN 
-                                        University U ON DU.University_ID = U.University_ID
-                                    LEFT JOIN 
-                                        Degree_Jobs DJ ON DD.Degree_ID = DJ.Degree_ID
-                                    LEFT JOIN 
-                                        Job_Career JC ON DJ.Job_ID = JC.Job_ID
-                                    WHERE 
-                                        DD.DegreeName = @DegreeName
-                                        AND U.UniversityName = @UniversityName;";
+                                DC.Level,
+                                DC.Semester,
+                                DC.Subject,
+                                DC.Core_Optional,
+                                DC.SubCredits
+                            FROM 
+                                Degree_Content DC
+                            INNER JOIN 
+                                DegreeDetails DD ON DC.Degree_ID = DD.Degree_ID
+                            INNER JOIN 
+                                Degree_University DU ON DD.Degree_ID = DU.Degree_ID
+                            INNER JOIN 
+                                University U ON DU.University_ID = U.University_ID
+                            WHERE 
+                                DD.DegreeName = @DegreeName
+                                AND U.UniversityName = @UniversityName;";
 
                         using (SqlCommand cmd = new SqlCommand(query, con))
                         {
@@ -110,26 +77,13 @@ namespace ITCareerSystem_Test1_.Controllers
 
                                         MoreDegreeInformation moreDegree = new MoreDegreeInformation();
                                         {
-                                            //moreDegree.DegreeName = row["DegreeName"].ToString();
-                                            //moreDegree.UniversityName = row["UniversityName"].ToString();
-                                            //moreDegree.No_of_Years = Convert.ToInt32(row["No_of_Years"]);
-                                            //moreDegree.No_of_Chairs = Convert.ToInt32(row["No_of_Chairs"]);
-                                            //moreDegree.AptitudeTest = row["AptitudeTest"].ToString();
-                                            //moreDegree.Credits = Convert.ToInt32(row["Credits"]);
-                                            //moreDegree.NVQ_SLQF = Convert.ToInt32(row["NVQ_SLQF"]);
-                                            //moreDegree.Degree_Type = row["Degree_Type"].ToString();
-                                            //moreDegree.Faculty = row["Faculty"].ToString();
-                                            //moreDegree.Department = row["Department"].ToString();
-                                            //moreDegree.No_of_Special_Student = Convert.ToInt32(row["No_of_Special_Student"]);
+                                            
                                             moreDegree.Level = Convert.ToInt32(row["Level"]);
                                             moreDegree.Semester = Convert.ToInt32(row["Semester"]);
                                             moreDegree.Subject = row["Subject"].ToString();
                                             moreDegree.SubCredits = Convert.ToSingle(row["SubCredits"]);
                                             moreDegree.Core_Optional = row["Core_Optional"].ToString();
-                                            //moreDegree.Job_Name = row["Job_Name"].ToString();
-                                            //moreDegree.Description = row["Descp"].ToString();
-                                            //moreDegree.Local_Global = row["Local_Global"].ToString();
-                                            //moreDegree.Estimated_Salary = row["Estimated_Salary"].ToString();
+                                           
                                         };
                                         moreDegreeInformatins.Add(moreDegree);
 
