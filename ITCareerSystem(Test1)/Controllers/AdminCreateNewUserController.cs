@@ -7,44 +7,41 @@ using System.Data.Common;
 
 namespace ITCareerSystem_Test1_.Controllers
 {
-    [Route("SignUp")]
+    [Route("CreateUser")]
     [ApiController]
-    public class SignUpController : ControllerBase
+    public class AdminCreateNewUserController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        private readonly DatabaseConnection _dbConnection;
-        public SignUpController(IConfiguration configuration)
+        public AdminCreateNewUserController(IConfiguration configuration)
         {
 
             this._configuration = configuration;
-            this._dbConnection = DatabaseConnection.Instance(configuration);
-
         }
 
         [HttpPost]
-        [Route("PostSignUpDetails")]
-
+        [Route("PostCreateUser")]
         public IActionResult PostSignUpDetails([FromBody] User user)
         {
             String UserName = user.User_Name;
             String Password = user.Password;
             String email = user.Email;
             String TP_Number = user.TP_Number;
+            String User_Role = user.User_Role;
 
             try
             {
-                if (String.IsNullOrEmpty(UserName) || String.IsNullOrEmpty(Password) || String.IsNullOrEmpty(email))
+
+                if (String.IsNullOrEmpty(UserName) || String.IsNullOrEmpty(Password) || String.IsNullOrEmpty(email) || String.IsNullOrEmpty(User_Role))
                 {
                     return BadRequest("Values Can not be Empty");
                 }
 
-                using (SqlConnection con = new SqlConnection(_configuration.GetConnectionString("DataBaseConnection")))
+                using(SqlConnection con = new SqlConnection(_configuration.GetConnectionString("DatabaseConnection")))
                 {
                     con.Open();
-
                     // Select all degrees based on the provided subjects
                     string query = @"INSERT INTO [User] (User_Name, Password, Email, TP_Number, UserRole)
-                        VALUES (@UserName, @Password, @email, @TP_Number, 'User')";
+                        VALUES (@UserName, @Password, @email, @TP_Number, @User_Role)";
 
                     // Execute query
                     using (SqlCommand cmd = new SqlCommand(query, con))
@@ -52,9 +49,9 @@ namespace ITCareerSystem_Test1_.Controllers
 
                         cmd.Parameters.AddWithValue("@UserName", UserName);
                         cmd.Parameters.AddWithValue("@Password", Password);
-                        cmd.Parameters.AddWithValue("@mail", email);
+                        cmd.Parameters.AddWithValue("@email", email);
                         cmd.Parameters.AddWithValue("@TP_Number", TP_Number);
-
+                        cmd.Parameters.AddWithValue("@User_Role", User_Role);
 
                         int rowsAffected = cmd.ExecuteNonQuery();
 
@@ -68,8 +65,7 @@ namespace ITCareerSystem_Test1_.Controllers
                         }
                     }
                 }
-            }
-            catch (Exception ex)
+            }catch(Exception ex)
             {
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
