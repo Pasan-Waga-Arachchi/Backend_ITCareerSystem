@@ -28,7 +28,5 @@ public class DegreeZScore
     [Column(TypeName = "decimal(9,4)")]
     public decimal Prediction { get; set; }
 
-    // New property for file path
-    [NotMapped]
-    public IFormFile CsvFile { get; set; }
+    public IFormFile CsvFilePath { get; set; } // Add this property
 }
