@@ -7,4 +7,8 @@
         public String? Local_Global { get; set; }
         public String? Estimated_Salary { get; set; }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> main

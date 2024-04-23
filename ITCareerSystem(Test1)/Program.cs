@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -11,6 +12,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 
+=======
+using Microsoft.Extensions.DependencyInjection;
+var builder = WebApplication.CreateBuilder(args);
+
+
+>>>>>>> main
 // Add services to the container.
 
 
@@ -36,7 +43,7 @@ builder.Services.AddCors(options =>
 });
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
@@ -51,6 +58,7 @@ else
     app.UseExceptionHandler("/error");
 }
 
+
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseCors("AllowAll"); // Apply CORS policy
@@ -61,3 +69,41 @@ app.UseEndpoints(endpoints =>
 });
 
 app.Run();
+
+public class Startup
+{
+    public void ConfigureServices(IServiceCollection services)
+    {
+        // Other service configurations...
+
+        // Add CORS
+        services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAll",
+                builder =>
+                {
+                    builder.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader();
+                });
+        });
+
+        // Other service configurations...
+    }
+
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        // Other app configurations...
+
+        // Use CORS
+        app.UseCors("AllowAll");
+
+        // Other app configurations...
+    }
+}
+
+
+
+// Configure the HTTP request pipeline.
+
+

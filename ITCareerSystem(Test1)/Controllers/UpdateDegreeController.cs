@@ -94,4 +94,8 @@ namespace ITCareerSystem_Test1_.Controllers
             }
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> main
