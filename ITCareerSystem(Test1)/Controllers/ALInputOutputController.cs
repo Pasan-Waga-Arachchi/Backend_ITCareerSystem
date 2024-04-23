@@ -16,13 +16,19 @@ namespace ITCareerSystem_Test1_.Controllers
     public class ALInputOutputController : ControllerBase
     {
         private readonly IConfiguration _configuration;
+        private readonly DatabaseConnection _dbConnection;
 
         public ALInputOutputController(IConfiguration configuration)
         {
-            _configuration = configuration;
+            this._configuration = configuration;
+            this._dbConnection = DatabaseConnection.Instance(configuration);
         }
 
+<<<<<<< HEAD
+            [HttpGet] // Changed to POST to accept input from user
+=======
         [HttpGet] // Changed to POST to accept input from user
+>>>>>>> main
         [Route("GetDegreesBySubjects")]
         public IActionResult GetDegreesBySubjects(String Subject1, String Subject2, String Subject3, String District, float ZScore)
         {
@@ -88,16 +94,28 @@ namespace ITCareerSystem_Test1_.Controllers
                             // If degrees found, return them
                             if (dt.Rows.Count > 0)
                             {
+<<<<<<< HEAD
+
+=======
                                 
+>>>>>>> main
                                 List<ALInputOutput> aLInputOutputs = new List<ALInputOutput>();
                                 foreach (DataRow row in dt.Rows)
                                 {
                                     ALInputOutput aOutput = new ALInputOutput();
+<<<<<<< HEAD
+
+                                    {
+
+                                        aOutput.UniversityName = row["UniversityName"].ToString();
+                                        aOutput.DegreeName = row["Degreename"].ToString();
+=======
                                     
                                     {
 
                                         aOutput.UniversityName = row["UniversityName"].ToString();
                                         aOutput.DegreeName = row["Degreename"].ToString() ;
+>>>>>>> main
                                         if (row["Year_ago_ZScore"] != DBNull.Value)
                                         {
                                             aOutput.Year_ago_ZScore = Convert.ToInt32(row["Year_ago_ZScore"]);

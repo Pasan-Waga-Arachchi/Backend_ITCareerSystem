@@ -2,9 +2,8 @@
 {
     public class OLOutput
     {
-        public string? Combination { get; set; }
-        public String? DegreeName { get; set; }
-        public String? UniversityName { get; set; }
-
+        public string Combination { get; set; }
+        public string DegreeName { get; set; }
+        public string UniversityName { get; set; }
     }
 }

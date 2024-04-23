@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
+using System.Data.Common;
 
 namespace ITCareerSystem_Test1_.Controllers
 {
@@ -13,15 +14,24 @@ namespace ITCareerSystem_Test1_.Controllers
     public class MoreDegreeInfoController : ControllerBase
     {
         private readonly IConfiguration _configuration;
+        private readonly DatabaseConnection _dbConnection;
         public MoreDegreeInfoController(IConfiguration configuration)
         {
-            _configuration = configuration;
+            this._configuration = configuration;
+            this._dbConnection = DatabaseConnection.Instance(configuration);
         }
 
+<<<<<<< HEAD
+            [HttpGet]
+        [Route("MoreDegreeInformation")]
+
+        public IActionResult MoreDegreeInformation(String DegreeName, String UniversityName)
+=======
         [HttpGet] // Changed to POST to accept input from user
         [Route("MoreDegreeInformation")]
 
         public IActionResult MoreDegreeInformation(String? DegreeName, String UniversityName)
+>>>>>>> main
         {
             try
             {
@@ -35,6 +45,45 @@ namespace ITCareerSystem_Test1_.Controllers
                     con.Open();
 
                     // Select all degrees based on the provided subjects
+<<<<<<< HEAD
+                    string query = @"SELECT DISTINCT
+                                        DU.No_of_Years,
+                                        DU.Industrial_Training,
+                                        DU.Credits,
+                                        DU.NVQ_SLQF,
+                                        DU.Degree_Type,
+                                        DU.No_of_Chairs,
+                                        DU.Faculty,
+                                        DU.Department,
+                                        DU.No_of_Special_Student,
+                                        DU.AptitudeTest,
+                                        U.UniversityName,
+                                        DD.DegreeName,
+                                        DD.Main_Discipline
+                                    FROM 
+                                        (
+                                            SELECT DISTINCT 
+                                                DC.Degree_ID
+                                            FROM 
+                                                Degree_Content DC
+                                            INNER JOIN 
+                                                DegreeDetails DD ON DC.Degree_ID = DD.Degree_ID
+                                            WHERE 
+                                                DD.DegreeName = @DegreeName
+                                        ) DC
+                                    INNER JOIN 
+                                        DegreeDetails DD ON DC.Degree_ID = DD.Degree_ID
+                                    INNER JOIN 
+                                        Degree_University DU ON DD.Degree_ID = DU.Degree_ID
+                                    INNER JOIN 
+                                        University U ON DU.University_ID = U.University_ID
+                                    LEFT JOIN 
+                                        Degree_Jobs DJ ON DD.Degree_ID = DJ.Degree_ID
+                                    LEFT JOIN 
+                                        Job_Career JC ON DJ.Job_ID = JC.Job_ID
+                                    WHERE 
+                                        U.UniversityName = @UniversityName;";
+=======
                     string query = @"SELECT 
     DC.Level,
     DC.Semester,
@@ -86,6 +135,7 @@ WHERE
     DD.DegreeName = @DegreeName
     AND U.UniversityName = @UniversityName;
 ";
+>>>>>>> main
 
                     // Execute query
                     using (SqlCommand cmd = new SqlCommand(query, con))
@@ -101,11 +151,11 @@ WHERE
                             // If degrees found, return them
                             if (dt.Rows.Count > 0)
                             {
-                                List<MoreDegreeInfor> moreDegreeInformatins = new List<MoreDegreeInfor>();
+                                List<MoreDegreeInformation> moreDegreeInformatins = new List<MoreDegreeInformation>();
                                 foreach (DataRow row in dt.Rows)
                                 {
 
-                                    MoreDegreeInfor moreDegree = new MoreDegreeInfor();
+                                    MoreDegreeInformation moreDegree = new MoreDegreeInformation();
                                     {
                                         moreDegree.DegreeName = row["DegreeName"].ToString();
                                         moreDegree.UniversityName = row["UniversityName"].ToString();
@@ -118,11 +168,19 @@ WHERE
                                         moreDegree.Faculty = row["Faculty"].ToString();
                                         moreDegree.Department = row["Department"].ToString();
                                         moreDegree.No_of_Special_Student = Convert.ToInt32(row["No_of_Special_Student"]);
+<<<<<<< HEAD
+                                        //moreDegree.Level = Convert.ToInt32(row["Level"]);
+                                        //moreDegree.Semester = Convert.ToInt32(row["Semester"]);
+                                        //moreDegree.Subject = row["Subject"].ToString();
+                                        //moreDegree.SubCredits = Convert.ToSingle(row["SubCredits"]);
+                                        //moreDegree.Core_Optional = row["Core_Optional"].ToString();
+=======
                                         moreDegree.Level = Convert.ToInt32(row["Level"]);
                                         moreDegree.Semester = Convert.ToInt32(row["Semester"]);
                                         moreDegree.Subject = row["Subject"].ToString();
                                         moreDegree.SubCredits = Convert.ToSingle(row["SubCredits"]);
                                         moreDegree.Core_Optional = row["Core_Optional"].ToString();
+>>>>>>> main
                                         //moreDegree.Job_Name = row["Job_Name"].ToString();
                                         //moreDegree.Descp = row["Descp"].ToString();
                                         //moreDegree.Local_Global = row["Local_Global"].ToString();

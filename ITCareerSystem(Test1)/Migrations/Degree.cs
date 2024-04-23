@@ -2,7 +2,7 @@
 {
     public class Degree
     {
-        
+
         public String? DegreeName { get; set; }
         public String? UniversityName { get; set; }
 

@@ -8,4 +8,8 @@
         public float? Year_ago_ZScore { get; set; }
         public float? Prediction { get; set; }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> main

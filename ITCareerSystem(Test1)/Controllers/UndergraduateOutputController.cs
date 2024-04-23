@@ -36,6 +36,25 @@ namespace ITCareerSystem_Test1_.Controllers
 
                     // Select all degrees based on the provided subjects
                     string query = @"
+<<<<<<< HEAD
+                                    SELECT 
+
+                                        JC.Job_Name,
+                                        JC.Descp,
+                                        JC.Estimated_Salary,
+                                        JC.Local_Global
+
+                                    FROM 
+
+                                        Job_Career JC
+                                        INNER JOIN Degree_Jobs DJ ON JC.Job_Id = DJ.Job_Id
+                                        INNER JOIN DegreeDetails DD ON DJ.Degree_ID = DD.Degree_ID
+                                        INNER JOIN Degree_University DU ON DU.Degree_ID = DD.Degree_ID
+                                        INNER JOIN University U ON U.University_ID = DU.University_ID
+                                    WHERE 
+                                        U.UniversityName = @UniversiryName
+                                        AND DD.DegreeName = @DegreeName;";
+=======
 SELECT 
 
     JC.Job_Name,
@@ -53,6 +72,7 @@ FROM
 WHERE 
     U.UniversityName = @UniversiryName
     AND DD.DegreeName = @DegreeName;";
+>>>>>>> main
 
                     // Execute query
                     using (SqlCommand cmd = new SqlCommand(query, con))
@@ -103,4 +123,8 @@ WHERE
             }
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> main

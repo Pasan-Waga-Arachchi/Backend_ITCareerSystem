@@ -1,9 +1,9 @@
 ﻿namespace ITCareerSystem_Test1_.Models
 {
-    public class MoreDegreeInfor
+    public class MoreDegreeInformation
     {
-        public String? DegreeName { get; set; }
-        public String? UniversityName { get; set; }
+        public string DegreeName { get; set; }
+        public string UniversityName { get; set; }
         public int? No_of_Years { get; set; }
         public float? Credits { get; set; }
         public int? NVQ_SLQF { get; set; }
@@ -19,9 +19,8 @@
         public float? SubCredits { get; set; }
         public String? Core_Optional { get; set; }
         public String? Job_Name { get; set; }
-        public String? Descp { get; set; }
+        public String? Description { get; set; }
         public String? Local_Global { get; set; }
         public String? Estimated_Salary { get; set; }
-
     }
 }

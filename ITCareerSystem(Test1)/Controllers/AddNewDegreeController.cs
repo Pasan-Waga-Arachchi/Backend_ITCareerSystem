@@ -24,7 +24,11 @@ namespace ITCareerSystem_Test1_.Controllers
         {
             try
             {
+<<<<<<< HEAD
+                if (String.IsNullOrEmpty(Degree_ID) || String.IsNullOrEmpty(DegreeName) || String.IsNullOrEmpty(Main_Discipline) || String.IsNullOrEmpty(University_ID))
+=======
                 if (String.IsNullOrEmpty(Degree_ID) || String.IsNullOrEmpty(DegreeName) || String.IsNullOrEmpty(Main_Discipline) ||String.IsNullOrEmpty(University_ID))
+>>>>>>> main
                 {
                     return BadRequest("Values Cannot be Empty");
                 }
@@ -79,7 +83,11 @@ namespace ITCareerSystem_Test1_.Controllers
                         }
                     }
                 }
+<<<<<<< HEAD
+
+=======
             
+>>>>>>> main
             }
 
             catch (Exception ex)
@@ -88,6 +96,12 @@ namespace ITCareerSystem_Test1_.Controllers
             }
 
         }
+<<<<<<< HEAD
+
+    }
+}
+=======
         
     }
 }
+>>>>>>> main

@@ -1,9 +1,10 @@
-﻿using ITCareerSystem_Test1_.Models;
+using ITCareerSystem_Test1_.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration; // Add this using directive
 using System.Data.SqlClient;
 using System.Data;
+using System.Data.Common;
 
 namespace ITCareerSystem_Test1_.Controllers
 {
@@ -12,10 +13,14 @@ namespace ITCareerSystem_Test1_.Controllers
     public class OLOutputController : ControllerBase
     {
         private readonly IConfiguration _configuration;
+        private readonly DatabaseConnection _dbConnection;
+
 
         public OLOutputController(IConfiguration configuration)
         {
-            _configuration = configuration;
+            this._configuration = configuration;
+            this._dbConnection = DatabaseConnection.Instance(configuration);
+
         }
 
         [HttpGet] // Changed to POST to accept input from user
@@ -38,27 +43,27 @@ namespace ITCareerSystem_Test1_.Controllers
 
                     // Select all degrees based on the provided subjects
                     string query = @"SELECT
-    ALSubjectCombination.Combination,
-    DegreeDetails.DegreeName,
-    University.UniversityName
-FROM
-    ALSubjectCombination
-JOIN
-    CombinationDegree ON ALSubjectCombination.Combination_ID = CombinationDegree.Combination_ID
-JOIN
-    degree_jobs ON CombinationDegree.Degree_ID = degree_jobs.Degree_ID
-JOIN
-    job_career ON degree_jobs.Job_Id = job_career.Job_Id
-JOIN
-    DegreeDetails ON CombinationDegree.Degree_ID = DegreeDetails.Degree_ID
-JOIN
-    Degree_University ON CombinationDegree.Degree_ID = Degree_University.Degree_ID
-JOIN
-    University ON Degree_University.University_ID = University.University_ID
-WHERE
-    job_career.Job_Name = @jobRole
+                            ALSubjectCombination.Combination,
+                            DegreeDetails.DegreeName,
+                            University.UniversityName
+                        FROM
+                            ALSubjectCombination
+                        JOIN
+                            CombinationDegree ON ALSubjectCombination.Combination_ID = CombinationDegree.Combination_ID
+                        JOIN
+                            degree_jobs ON CombinationDegree.Degree_ID = degree_jobs.Degree_ID
+                        JOIN
+                            job_career ON degree_jobs.Job_Id = job_career.Job_Id
+                        JOIN
+                            DegreeDetails ON CombinationDegree.Degree_ID = DegreeDetails.Degree_ID
+                        JOIN
+                            Degree_University ON CombinationDegree.Degree_ID = Degree_University.Degree_ID
+                        JOIN
+                            University ON Degree_University.University_ID = University.University_ID
+                        WHERE
+                            job_career.Job_Name = @jobRole
 
-";
+                        ";
 
                     // Execute query
                     using (SqlCommand cmd = new SqlCommand(query, con))
