@@ -28,6 +28,7 @@ namespace ITCareerSystem_Test1_.Controllers
             decimal Year_ago_ZScore = degree.Year_ago_ZScore;
             decimal Two_Year_ago_ZScore = degree.Two_Year_ago_ZScore;
             decimal Prediction = degree.Prediction;
+            IFormFile FilePath = degree.CsvFilePath;
 
             try
             {
@@ -39,9 +40,9 @@ namespace ITCareerSystem_Test1_.Controllers
                 using (SqlConnection con = new SqlConnection(_configuration.GetConnectionString("DataBaseConnection")))
                 {
                     con.Open();
-                    string query  = @"UPDATE [Degree_ZScore] 
+                    string query = @"UPDATE [Degree_ZScore] 
                                       SET Prediction = @Prediction, Year_ago_ZScore = @Year_ago_ZScore, Two_Year_ago_ZScore = @Two_Year_ago_ZScore
-                                     WHERE Degree_ID = @Degree_ID AND University_ID = @University_TD AND District_ID = @District_ID;"
+                                     WHERE Degree_ID = @Degree_ID AND University_ID = @University_TD AND District_ID = @District_ID;";
                 }
 
             }
