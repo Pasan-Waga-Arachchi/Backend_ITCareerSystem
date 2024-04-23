@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -11,13 +11,6 @@ using ITCareerSystem_Test1_.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 
-
-=======
-using Microsoft.Extensions.DependencyInjection;
-var builder = WebApplication.CreateBuilder(args);
-
-
->>>>>>> main
 // Add services to the container.
 
 
