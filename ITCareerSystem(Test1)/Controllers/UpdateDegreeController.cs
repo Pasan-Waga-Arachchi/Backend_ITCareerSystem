@@ -20,6 +20,10 @@ namespace ITCareerSystem_Test1_.Controllers
         [Route("UpdateDegreeDetails")]
         public IActionResult UpdateDegreeDetails(string DegreeName, string UniversityName, string Faculty, string Department, int No_of_Years, string Main_Discipline, string Industrial_Training, int Credits, int NVQ_SLQF, string Degree_Type, int No_of_Chairs, int No_of_Special_Student, string AptitudeTest)
         {
+
+
+
+
             try
             {
                 if (string.IsNullOrEmpty(DegreeName) || string.IsNullOrEmpty(UniversityName) || string.IsNullOrEmpty(Faculty) || string.IsNullOrEmpty(Department))

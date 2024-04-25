@@ -21,29 +21,14 @@ namespace ITCareerSystem_Test1_.Controllers
         [Route("PostAddNewDegree")]
 
 
-        public IActionResult PostAddNewDegree([FromBody] Degree_University newDegree)
+        public IActionResult PostAddNewDegree(String No_of_Special_Student,String AptitudeTest,String Department,String Faculty,int No_of_Chairs, String Degree_Type, String NVQ_SLQF, float Credits, String Industrial_Training,String No_of_Years ,String DegreeName,String Degree_ID, String Main_Discipline, String University_ID)
         {
-            
-            
-            String Degree_ID = newDegree.Degree_ID;
-            String Main_Discipline = newDegree.Description;
-            String University_ID = newDegree.University_ID;
-            String No_of_Years = newDegree.No_of_Years;
-            String Industrial_Training = newDegree.Industrial_Training;
-            float Credits = (float)newDegree.Credits;
-            String NVQ_SLQF = newDegree.NVQ_SLQF;
-            String Degree_Type = newDegree.Degree_Type;
-            int No_of_Chairs = (int)newDegree.No_of_Chairs;
-            String Faculty = newDegree.Faculty;
-            String Department = newDegree.Department;
-            String AptitudeTest = newDegree.AptitudeTest;
-            int No_of_Special_Student = (int)newDegree.No_of_Special_Student;
             try
             {
 
-                if (String.IsNullOrEmpty(Degree_ID)  || String.IsNullOrEmpty(Main_Discipline) || String.IsNullOrEmpty(University_ID))
+                if (String.IsNullOrEmpty(Degree_ID) || String.IsNullOrEmpty(DegreeName) || String.IsNullOrEmpty(Main_Discipline) || String.IsNullOrEmpty(University_ID))
 
-                if (String.IsNullOrEmpty(Degree_ID)  || String.IsNullOrEmpty(Main_Discipline) ||String.IsNullOrEmpty(University_ID))
+                if (String.IsNullOrEmpty(Degree_ID) || String.IsNullOrEmpty(DegreeName) || String.IsNullOrEmpty(Main_Discipline) ||String.IsNullOrEmpty(University_ID))
 
                 {
                     return BadRequest("Values Cannot be Empty");
@@ -57,8 +42,8 @@ namespace ITCareerSystem_Test1_.Controllers
                     // sql query to Add new degree to DegreeDetails 
                     string query = @"BEGIN TRANSACTION;
 
-                        INSERT INTO [DegreeDetails] (Degree_ID, Main_Discipline)
-                        VALUES (@Degree_ID, @Main_Discipline);
+                        INSERT INTO [DegreeDetails] (Degree_ID, DegreeName, Main_Discipline)
+                        VALUES (@Degree_ID, @DegreeName, @Main_Discipline);
 
                         INSERT INTO Degree_University (Degree_ID, University_ID, No_of_Years, Industrial_Training, Credits, NVQ_SLQF, Degree_Type, No_of_Chairs, Faculty, Department, No_of_Special_Student, AptitudeTest)
                         VALUES (@Degree_ID, @University_ID, @No_of_Years, @Industrial_Training, @Credits, @NVQ_SLQF, @Degree_Type, @No_of_Chairs, @Faculty, @Department, @No_of_Special_Student, @AptitudeTest);
@@ -72,6 +57,7 @@ namespace ITCareerSystem_Test1_.Controllers
 
 
                         cmd.Parameters.AddWithValue("@Degree_ID", Degree_ID);
+                        cmd.Parameters.AddWithValue("@DegreeName", DegreeName);
                         cmd.Parameters.AddWithValue("@Main_Discipline", Main_Discipline);
                         cmd.Parameters.AddWithValue("@University_ID", University_ID);
                         cmd.Parameters.AddWithValue("@No_of_Years", No_of_Years);
