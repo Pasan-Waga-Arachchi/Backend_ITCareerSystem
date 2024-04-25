@@ -21,8 +21,22 @@ namespace ITCareerSystem_Test1_.Controllers
         [Route("PostAddNewDegree")]
 
 
-        public IActionResult PostAddNewDegree(String No_of_Special_Student,String AptitudeTest,String Department,String Faculty,int No_of_Chairs, String Degree_Type, String NVQ_SLQF, float Credits, String Industrial_Training,String No_of_Years ,String DegreeName,String Degree_ID, String Main_Discipline, String University_ID)
+        public IActionResult PostAddNewDegree([FromBody] AddNewDegree newDegree)
         {
+            String DegreeName = newDegree.Degree_Name;
+            String Degree_ID = newDegree.Degree_ID;
+            String Main_Discipline = newDegree.Main_Discipline;
+            String University_ID = newDegree.University_ID;
+            String No_of_Years = newDegree.No_of_Years;
+            String Industrial_Training = newDegree.Industrial_Training;
+            float Credits = (float)newDegree.Credits;
+            String NVQ_SLQF = newDegree.NVQ_SLQF;
+            String Degree_Type = newDegree.Degree_Type;
+            int No_of_Chairs = (int)newDegree.No_of_Chairs;
+            String Faculty = newDegree.Faculty;
+            String Department = newDegree.Department;
+            String AptitudeTest = newDegree.AptitudeTest;
+            String No_of_Special_Student = newDegree.No_of_Special_Student;
             try
             {
 
