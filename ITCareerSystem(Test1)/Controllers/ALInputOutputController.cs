@@ -102,12 +102,12 @@ namespace ITCareerSystem_Test1_.Controllers
                                         aOutput.DegreeName = row["Degreename"].ToString();
                                         if (row["Year_ago_ZScore"] != DBNull.Value)
                                         {
-                                            aOutput.Year_ago_ZScore = Convert.ToInt32(row["Year_ago_ZScore"]);
+                                            aOutput.Year_ago_ZScore = (float)Convert.ToDouble(row["Year_ago_ZScore"]);
                                         }
 
                                         if (row["Prediction"] != DBNull.Value)
                                         {
-                                            aOutput.Prediction = Convert.ToInt32(row["Prediction"]);
+                                            aOutput.Prediction = (float?)Convert.ToDouble(row["Prediction"]);
                                         }
 
 
