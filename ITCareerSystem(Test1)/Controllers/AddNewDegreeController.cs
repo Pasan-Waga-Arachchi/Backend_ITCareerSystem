@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ITCareerSystem_Test1_.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Data.SqlClient;
 
@@ -20,8 +21,23 @@ namespace ITCareerSystem_Test1_.Controllers
         [Route("PostAddNewDegree")]
 
 
-        public IActionResult PostAddNewDegree(String Degree_ID, String DegreeName, String Main_Discipline, String University_ID, int No_of_Years, String Industrial_Training, int Credits, int NVQ_SLQF, String Degree_Type, int No_of_Chairs, String Faculty, String Department, int No_of_Special_Student, String AptitudeTest)
+        public IActionResult PostAddNewDegree([FromBody] Degree_University newDegree, University uniName)
         {
+            String DegreeName = uniName.UniversityName;
+            String University_Id = uniName.University_ID;
+            String Degree_ID = newDegree.Degree_ID;
+            String Main_Discipline = newDegree.Description;
+            String University_ID = newDegree.University_ID;
+            String No_of_Years = newDegree.No_of_Years;
+            String Industrial_Training = newDegree.Industrial_Training;
+            float Credits = (float)newDegree.Credits;
+            String NVQ_SLQF = newDegree.NVQ_SLQF;
+            String Degree_Type = newDegree.Degree_Type;
+            int No_of_Chairs = (int)newDegree.No_of_Chairs;
+            String Faculty = newDegree.Faculty;
+            String Department = newDegree.Department;
+            String AptitudeTest = newDegree.AptitudeTest;
+            int No_of_Special_Student = (int)newDegree.No_of_Special_Student;
             try
             {
 
