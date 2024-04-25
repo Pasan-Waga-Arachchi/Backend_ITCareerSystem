@@ -21,10 +21,10 @@ namespace ITCareerSystem_Test1_.Controllers
         [Route("PostAddNewDegree")]
 
 
-        public IActionResult PostAddNewDegree([FromBody] Degree_University newDegree, University uniName)
+        public IActionResult PostAddNewDegree([FromBody] Degree_University newDegree)
         {
-            String DegreeName = uniName.UniversityName;
-            String University_Id = uniName.University_ID;
+            
+            
             String Degree_ID = newDegree.Degree_ID;
             String Main_Discipline = newDegree.Description;
             String University_ID = newDegree.University_ID;
@@ -41,9 +41,9 @@ namespace ITCareerSystem_Test1_.Controllers
             try
             {
 
-                if (String.IsNullOrEmpty(Degree_ID) || String.IsNullOrEmpty(DegreeName) || String.IsNullOrEmpty(Main_Discipline) || String.IsNullOrEmpty(University_ID))
+                if (String.IsNullOrEmpty(Degree_ID)  || String.IsNullOrEmpty(Main_Discipline) || String.IsNullOrEmpty(University_ID))
 
-                if (String.IsNullOrEmpty(Degree_ID) || String.IsNullOrEmpty(DegreeName) || String.IsNullOrEmpty(Main_Discipline) ||String.IsNullOrEmpty(University_ID))
+                if (String.IsNullOrEmpty(Degree_ID)  || String.IsNullOrEmpty(Main_Discipline) ||String.IsNullOrEmpty(University_ID))
 
                 {
                     return BadRequest("Values Cannot be Empty");
@@ -57,8 +57,8 @@ namespace ITCareerSystem_Test1_.Controllers
                     // sql query to Add new degree to DegreeDetails 
                     string query = @"BEGIN TRANSACTION;
 
-                        INSERT INTO [DegreeDetails] (Degree_ID, DegreeName, Main_Discipline)
-                        VALUES (@Degree_ID, @DegreeName, @Main_Discipline);
+                        INSERT INTO [DegreeDetails] (Degree_ID, Main_Discipline)
+                        VALUES (@Degree_ID, @Main_Discipline);
 
                         INSERT INTO Degree_University (Degree_ID, University_ID, No_of_Years, Industrial_Training, Credits, NVQ_SLQF, Degree_Type, No_of_Chairs, Faculty, Department, No_of_Special_Student, AptitudeTest)
                         VALUES (@Degree_ID, @University_ID, @No_of_Years, @Industrial_Training, @Credits, @NVQ_SLQF, @Degree_Type, @No_of_Chairs, @Faculty, @Department, @No_of_Special_Student, @AptitudeTest);
@@ -72,7 +72,6 @@ namespace ITCareerSystem_Test1_.Controllers
 
 
                         cmd.Parameters.AddWithValue("@Degree_ID", Degree_ID);
-                        cmd.Parameters.AddWithValue("@DegreeName", DegreeName);
                         cmd.Parameters.AddWithValue("@Main_Discipline", Main_Discipline);
                         cmd.Parameters.AddWithValue("@University_ID", University_ID);
                         cmd.Parameters.AddWithValue("@No_of_Years", No_of_Years);
